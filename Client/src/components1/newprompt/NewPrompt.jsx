@@ -38,6 +38,10 @@ const NewPrompt = ({ data }) => {
                 console.error("Chat ID is undefined, preventing API call.");
                 return Promise.reject("Chat ID is undefined.");
             }
+            if (!chatId) {
+                console.error("Chat ID is undefined!");
+                return;
+            }
             return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
                 method: "PUT",
                 credentials: 'include',
