@@ -1,4 +1,3 @@
-import React from 'react';
 import { IKImage } from 'imagekitio-react';
 import Upload from '../upload/Upload';
 import './newPrompt.css';
@@ -19,14 +18,11 @@ const NewPrompt = ({ data }) => {
 
     // Ensure history is correctly formatted
     const chat = model.startChat({
-    history: Array.isArray(data?.history) 
-        ? data.history.map(({ role, parts }) => ({
+        history: data?.history?.map(({ role, parts }) => ({
             role,
-            parts: [{ text: parts?.[0]?.text || '' }], // Ensure text exists
-        }))
-        : [], // Default to an empty array if history is undefined
-});
-
+            parts: [{ text: parts[0]?.text || '' }], // Ensure text is not undefined
+        })) || [], // Ensure history is an array
+    });
 
     const endRef = useRef(null);
     const formRef = useRef(null);
