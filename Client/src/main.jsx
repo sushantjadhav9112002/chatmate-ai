@@ -38,7 +38,7 @@ const router = createBrowserRouter([ // Use lowercase 'router' consistently
           element: <DashBoardPage />,
           },
           {
-            path: "/dashboard/chats/:id",
+            path: "/dashboard/chats/:chatId",
             element: <ChatPage />,
           },
         ],
