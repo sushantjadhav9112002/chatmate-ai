@@ -1,3 +1,4 @@
+import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaTrash } from 'react-icons/fa'; // Import the trash icon
 import './chatList.css';
@@ -12,9 +13,7 @@ const Chatlist = () => {
         queryFn: () =>
             fetch(`${import.meta.env.VITE_API_URL}/api/userchats`, {
                 credentials: "include",
-            }).then((res) =>
-                res.json(),
-            ),
+            }).then((res) => res.json()),
     });
 
     // Mutation for deleting a chat
@@ -46,15 +45,22 @@ const Chatlist = () => {
 
             <span className="title">RECENT CHATS</span>
             <div className="list">
-                {isPending ? "Loading..." : error ? "Something went wrong!" : data?.map((chat) => (
-                    <div key={chat._id} className="chat-item">
-                        <Link to={`/dashboard/chats/${chat._id}`}>
-                            {chat.title.length > 10 ? chat.title.slice(0, 10) + "..." : chat.title}
-                        </Link>
-
-                        <FaTrash onClick={() => handleDelete(chat._id)} className="delete-icon" />
-                    </div>
-                ))}
+                {isPending ? (
+                    "Loading..."
+                ) : error ? (
+                    "Something went wrong!"
+                ) : Array.isArray(data) ? (
+                    data.map((chat) => (
+                        <div key={chat._id} className="chat-item">
+                            <Link to={`/dashboard/chats/${chat._id}`}>
+                                {chat.title.length > 10 ? chat.title.slice(0, 10) + "..." : chat.title}
+                            </Link>
+                            <FaTrash onClick={() => handleDelete(chat._id)} className="delete-icon" />
+                        </div>
+                    ))
+                ) : (
+                    "No chats available"
+                )}
             </div>
             <hr />
             <div className="upgrade">
