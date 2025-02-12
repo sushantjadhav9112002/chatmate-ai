@@ -34,19 +34,20 @@ const NewPrompt = ({ data }) => {
 
     const mutation = useMutation({
         mutationFn: () => {
+            if (!data?._id) {
+                console.error("Chat ID is undefined, preventing API call.");
+                return Promise.reject("Chat ID is undefined.");
+            }
             return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
                 method: "PUT",
                 credentials: 'include',
-                headers: {
-                    "Content-Type": "application/json",
+                headers: { "Content-Type": "application/json" ,
+                    "Authorization": `Bearer ${Token}`
                 },
-                body: JSON.stringify({
-                    question: question.length ? question : undefined,
-                    answer,
-                    img: img.dbData?.filePath || undefined,
-                }),
+                body: JSON.stringify({ question, answer, img: img.dbData?.filePath }),
             }).then(res => res.json());
         },
+        
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['chat', data._id] }).then(() => {
                 formRef.current.reset();

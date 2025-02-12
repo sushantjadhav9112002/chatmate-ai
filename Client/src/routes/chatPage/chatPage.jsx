@@ -1,5 +1,5 @@
 import './chatPage.css';
-import { React, useEffect } from 'react';
+import { useEffect } from 'react';
 import NewPrompt from '../../components1/newprompt/NewPrompt';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
