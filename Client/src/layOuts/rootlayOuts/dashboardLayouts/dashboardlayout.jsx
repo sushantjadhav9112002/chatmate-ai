@@ -27,8 +27,8 @@ const DashboardLayout = () => {
           navigate("/sign-in");
           return;
         }
-
-        const response = await fetch("http://localhost:3000/api/user", {
+        
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/user`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`,
