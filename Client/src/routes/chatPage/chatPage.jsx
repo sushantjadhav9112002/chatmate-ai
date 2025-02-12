@@ -12,8 +12,13 @@ import 'highlight.js/styles/github-dark.css';
 const chatPage = () => {
     const path = useLocation().pathname;
     const chatId = path.split('/').pop();
+    if(!chatId){
+        console.log("chatid not found");
+        return;
+    }
 
     const { isPending, error, data } = useQuery({
+        
         queryKey: ['chat', chatId],
         queryFn: () =>
             fetch(`${import.meta.env.VITE_API_URL}/api/chats/${chatId}`, {
